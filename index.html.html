@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shaxsiy Generator</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            /* Chuqur, romantik va ehtirosli gradient fon */
+            background: linear-gradient(135deg, #4a001f, #800020, #2b0036, #4a0e2e);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            /* Kartochka atrofidagi ehtirosli qizil-binafsha yog'du (Glow) effekti */
+            box-shadow: 0 10px 40px rgba(128, 0, 32, 0.6), 0 0 25px rgba(106, 44, 112, 0.5);
+            max-width: 480px;
+            width: 100%;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Konteyner balandligi olib tashlandi, rasm o'zining tabiiy bo'yini oladi */
+        .image-container {
+            width: 100%;
+            background-color: #1a0817; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px; /* Rasm va ramka orasida xavfsizlik masofasi */
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto; /* Rasm bo'yini mutlaqo kesmaydi */
+            max-height: 70vh; /* Juda baland bo'lib ketmasligi uchun chegara */
+            object-fit: contain;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .content {
+            padding: 24px;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 1.3rem;
+            color: #800020;
+            margin-bottom: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .guide-box {
+            background: #fff0f4;
+            border: 1px solid #f8c8d8;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 24px;
+            text-align: left;
+            color: #333;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #800020, #6a2c70);
+            color: white;
+            border: none;
+            padding: 16px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 5px 20px rgba(128, 0, 32, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(128, 0, 32, 0.7);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="image-container">
+        <img id="pose-img" src="" alt="Rasm yuklanmoqda...">
+    </div>
+    <div class="content">
+        <div class="title" id="pose-title">Poza #1</div>
+        <div class="guide-box" id="pose-guide">
+            Yuklanmoqda...
+        </div>
+        <button class="btn" onclick="getRandomPose()">Tasodifiysini tanlash ✨</button>
+    </div>
+</div>
+
+<script src="data.js"></script>
+
+<script>
+    function getRandomPose() {
+        if (typeof posesData === 'undefined' || posesData.length === 0) {
+            document.getElementById("pose-guide").innerText = "Ma'lumotlar topilmadi. data.js faylini tekshiring.";
+            return;
+        }
+
+        const randomIndex = Math.floor(Math.random() * posesData.length);
+        const selected = posesData[randomIndex];
+
+        document.getElementById("pose-img").src = selected.image;
+        document.getElementById("pose-title").innerText = `Poza #${selected.id}`;
+        document.getElementById("pose-guide").innerText = selected.guide;
+    }
+
+    window.onload = getRandomPose;
+</script>
+
+</body>
+</html>
